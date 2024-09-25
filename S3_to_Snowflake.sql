@@ -1,16 +1,15 @@
--- Set the Role and the DW
-USE ROLE accountadmin;
-USE WAREHOUSE compute_wh;
+-- Create Warehouse
+CREATE WAREHOUSE Transforming_WH;
 
 -- Create the database to store raw data
-CREATE DATABASE RAW;
+CREATE DATABASE Raw;
 
 -- Create Citibike and Weather schema
-CREATE SCHEMA RAW.Citibike;
-CREATE SCHEMA RAW.Weather;
+CREATE SCHEMA Raw.Citibike;
+CREATE SCHEMA Raw.Weather;
 
 -- Create the Tables trips and weather data
-CREATE TABLE RAW.Citibike.Trips(
+CREATE TABLE Raw.Citibike.Trips(
 tripduration integer,   
 starttime timestamp,   
 stoptime timestamp,   
@@ -28,7 +27,7 @@ usertype string,
 birth_year integer,   
 gender integer
 );
-CREATE TABLE RAW.Weather.weather_data(v variant); -- auto-detect schema
+CREATE TABLE Raw.Weather.weather_data(v variant); -- auto-detect schema
 
 -- Create an Amazon S3 Extrernal Stage to Load data from S3
 CREATE STAGE citibike_trips
@@ -39,7 +38,7 @@ CREATE STAGE nyc_weather_data
 URL='s3://snowflake-workshop-lab/weather-nyc';
 LIST @nyc_weather_data;
 
--- Load the data from S3 into your tables
+-- Create external file format
 CREATE OR REPLACE FILE FORMAT my_csv_format
 TYPE = CSV
 FIELD_DELIMITER = ','
@@ -49,42 +48,17 @@ TIMESTAMP_FORMAT = AUTO
 ESCAPE_UNENCLOSED_FIELD = '\\'
 FIELD_OPTIONALLY_ENCLOSED_BY = '"'
 NULL_IF = ( '' );
-  
-COPY INTO RAW.Citibike.Trips 
+
+-- Load the data from S3 into your tables
+COPY INTO Raw.Citibike.Trips 
 FROM @citibike_trips 
 file_format = my_csv_format
 PATTERN= '.*trips_.*csv.gz';
 
-COPY INTO RAW.Weather.weather_data 
+COPY INTO Raw.Weather.weather_data 
 FROM @nyc_weather_data 
 file_format = (type=json);
 
--- Test
-SELECT * FROM RAW.Citibike.Trips LIMIT 10;
-SELECT * FROM RAW.Weather.weather_data LIMIT 10;
-
--- Create View on Weather_data
-CREATE VIEW RAW.Weather.weather_data_view 
-AS SELECT   
-v:time::timestamp AS observation_time,   
-v:city.id::int AS city_id,   
-v:city.name::string AS city_name,   
-v:city.country::string AS country,   
-v:city.coord.lat::float AS city_lat,   
-v:city.coord.lon::float AS city_lon,   
-v:clouds.all::int AS clouds,   
-(v:main.temp::float)-273.15 AS temp_avg,   
-(v:main.temp_min::float)-273.15 AS temp_min,
-(v:main.temp_max::float)-273.15 AS temp_max,   
-v:weather[0].main::string AS weather,   
-v:weather[0].description::string AS weather_desc,   
-v:weather[0].icon::string AS weather_icon,   
-v:wind.deg::float AS wind_dir,   
-v:wind.speed::float AS wind_speed 
-FROM RAW.Weather.weather_data 
-WHERE city_id = 5128638;
-
--- Query the view
-SELECT * FROM RAW.Weather.weather_data_view 
-WHERE date_trunc('month',observation_time) = '2018-01-01'  
-LIMIT 20;
+-- Check
+SELECT * FROM Raw.Citibike.Trips LIMIT 10;
+SELECT * FROM Raw.Weather.weather_data LIMIT 10;

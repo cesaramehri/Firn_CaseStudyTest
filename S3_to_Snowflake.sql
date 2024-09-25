@@ -2,15 +2,15 @@
 USE ROLE accountadmin;
 USE WAREHOUSE compute_wh;
 
--- Create the Datalake DB
-CREATE DATABASE Datalake;
+-- Create the database to store raw data
+CREATE DATABASE RAW;
 
 -- Create Citibike and Weather schema
-CREATE SCHEMA Datalake.Citibike;
-CREATE SCHEMA Datalake.Weather;
+CREATE SCHEMA RAW.Citibike;
+CREATE SCHEMA RAW.Weather;
 
 -- Create the Tables trips and weather data
-CREATE TABLE Datalake.Citibike.Trips(
+CREATE TABLE RAW.Citibike.Trips(
 tripduration integer,   
 starttime timestamp,   
 stoptime timestamp,   
@@ -28,7 +28,7 @@ usertype string,
 birth_year integer,   
 gender integer
 );
-CREATE TABLE Datalake.Weather.weather_data(v variant); -- auto-detect schema
+CREATE TABLE RAW.Weather.weather_data(v variant); -- auto-detect schema
 
 -- Create an Amazon S3 Extrernal Stage to Load data from S3
 CREATE STAGE citibike_trips
@@ -50,21 +50,21 @@ ESCAPE_UNENCLOSED_FIELD = '\\'
 FIELD_OPTIONALLY_ENCLOSED_BY = '"'
 NULL_IF = ( '' );
   
-COPY INTO Datalake.Citibike.Trips 
+COPY INTO RAW.Citibike.Trips 
 FROM @citibike_trips 
 file_format = my_csv_format
 PATTERN= '.*trips_.*csv.gz';
 
-COPY INTO Datalake.Weather.weather_data 
+COPY INTO RAW.Weather.weather_data 
 FROM @nyc_weather_data 
 file_format = (type=json);
 
 -- Test
-SELECT * FROM Datalake.Citibike.Trips LIMIT 10;
-SELECT * FROM Datalake.Weather.weather_data LIMIT 10;
+SELECT * FROM RAW.Citibike.Trips LIMIT 10;
+SELECT * FROM RAW.Weather.weather_data LIMIT 10;
 
 -- Create View on Weather_data
-CREATE VIEW Datalake.Weather.weather_data_view 
+CREATE VIEW RAW.Weather.weather_data_view 
 AS SELECT   
 v:time::timestamp AS observation_time,   
 v:city.id::int AS city_id,   
@@ -81,10 +81,10 @@ v:weather[0].description::string AS weather_desc,
 v:weather[0].icon::string AS weather_icon,   
 v:wind.deg::float AS wind_dir,   
 v:wind.speed::float AS wind_speed 
-FROM Datalake.Weather.weather_data 
+FROM RAW.Weather.weather_data 
 WHERE city_id = 5128638;
 
 -- Query the view
-SELECT * FROM Datalake.Weather.weather_data_view 
+SELECT * FROM RAW.Weather.weather_data_view 
 WHERE date_trunc('month',observation_time) = '2018-01-01'  
 LIMIT 20;

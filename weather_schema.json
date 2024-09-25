@@ -1,0 +1,224 @@
+{
+  "city": {
+    "coord": {
+      "lat": 43.000351,
+      "lon": -75.499901
+    },
+    "country": "US",
+    "findname": "NEW YORK",
+    "id": 5128638,
+    "langs": [
+      {
+        "abbr": "NY"
+      },
+      {
+        "am": "ኒው ዮርክ"
+      },
+      {
+        "ang": "Nīwe Eoforwic"
+      },
+      {
+        "ar": "نيويورك"
+      },
+      {
+        "be": "Нью-Ёрк"
+      },
+      {
+        "bg": "Ню Йорк"
+      },
+      {
+        "br": "New York"
+      },
+      {
+        "bs": "New York"
+      },
+      {
+        "ca": "Nova York"
+      },
+      {
+        "cs": "New York"
+      },
+      {
+        "cy": "Efrog Newydd"
+      },
+      {
+        "da": "New York"
+      },
+      {
+        "de": "New York"
+      },
+      {
+        "en": "New York"
+      },
+      {
+        "eo": "Nov-Jorkio"
+      },
+      {
+        "es": "Nueva York"
+      },
+      {
+        "et": "New Yorgi osariik"
+      },
+      {
+        "fi": "New York"
+      },
+      {
+        "fr": "New York"
+      },
+      {
+        "frp": "New York"
+      },
+      {
+        "ga": "Nua-Eabhrac"
+      },
+      {
+        "gd": "Eabhraig Nuadh"
+      },
+      {
+        "gl": "Nova York"
+      },
+      {
+        "he": "ניו יורק"
+      },
+      {
+        "hi": "नया यॉर्क"
+      },
+      {
+        "hr": "New York"
+      },
+      {
+        "hu": "New York"
+      },
+      {
+        "id": "New York"
+      },
+      {
+        "io": "Nova-York"
+      },
+      {
+        "it": "New York"
+      },
+      {
+        "ja": "ニューヨーク州"
+      },
+      {
+        "jbo": "niuiork"
+      },
+      {
+        "ko": "뉴욕 주"
+      },
+      {
+        "ku": "New York"
+      },
+      {
+        "kw": "Stat Evrek Nowydh"
+      },
+      {
+        "la": "Novum Eboracum"
+      },
+      {
+        "link": "http://en.wikipedia.org/wiki/New_York"
+      },
+      {
+        "lt": "Niujorkas"
+      },
+      {
+        "lv": "Ņujorka"
+      },
+      {
+        "mk": "Њујорк"
+      },
+      {
+        "ms": "New York"
+      },
+      {
+        "nl": "New York"
+      },
+      {
+        "nn": "Delstaten New York"
+      },
+      {
+        "no": "New York State"
+      },
+      {
+        "oc": "Nòva York"
+      },
+      {
+        "os": "Нью-Йорк"
+      },
+      {
+        "pt": "Nova Iorque"
+      },
+      {
+        "ro": "New York"
+      },
+      {
+        "ru": "Нью-Йорк"
+      },
+      {
+        "sk": "New York"
+      },
+      {
+        "sl": "New York"
+      },
+      {
+        "sq": "New York"
+      },
+      {
+        "sr": "Њујорк"
+      },
+      {
+        "sv": "New York"
+      },
+      {
+        "ta": "நியூ யோர்க் மாநிலம்"
+      },
+      {
+        "th": "มลรัฐนิวยอร์ก"
+      },
+      {
+        "tl": "New York"
+      },
+      {
+        "tr": "New York"
+      },
+      {
+        "ug": "نيۇيورك شىتاتى"
+      },
+      {
+        "uk": "Нью-Йорк"
+      },
+      {
+        "vi": "Tiểu bang New York"
+      },
+      {
+        "zh": "纽约州"
+      }
+    ],
+    "name": "New York",
+    "zoom": 1
+  },
+  "clouds": {
+    "all": 1
+  },
+  "main": {
+    "humidity": 80,
+    "pressure": 1034,
+    "temp": 278.53,
+    "temp_max": 279.15,
+    "temp_min": 277.15
+  },
+  "time": 1478534596,
+  "weather": [
+    {
+      "description": "sky is clear",
+      "icon": "01d",
+      "id": 800,
+      "main": "Clear"
+    }
+  ],
+  "wind": {
+    "deg": 122.5,
+    "speed": 1.42
+  }
+}

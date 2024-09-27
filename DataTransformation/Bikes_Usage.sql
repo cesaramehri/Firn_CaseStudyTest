@@ -14,7 +14,7 @@ with
                     end_station_longitude
                 )
             ) as "avg distance (km)"
-        from raw.citibike.trips
+        from {{ source("citibike", "trips") }}
         group by 1
         order by 1
 

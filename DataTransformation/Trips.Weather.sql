@@ -17,12 +17,13 @@ with
             v:weather[0].icon::string as weather_icon,
             v:wind.deg::float as wind_dir,
             v:wind.speed::float as wind_speed
-        from raw.weather.weather_data
+        from {{ source("weather", "weather_data") }}
         where city_id = 5128638
 
     )
+    
 select w.weather as conditions, count(t.*) as num_trips
-from raw.citibike.trips as t
+from {{ source("citibike", "trips") }} as t
 left outer join
     nyc_weather as w
     on date_trunc('hour', w.observation_time) = date_trunc('hour', t.starttime)
